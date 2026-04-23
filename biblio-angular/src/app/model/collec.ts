@@ -1,4 +1,4 @@
 export interface Collec {
     id: number;
-    libelle: string;
+    nom: string;
 }
