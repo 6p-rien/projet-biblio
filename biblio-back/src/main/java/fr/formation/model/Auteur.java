@@ -24,7 +24,8 @@ public class Auteur {
     @Column(nullable = false)
     private String nationalite;
 
-    public Auteur() {}
+    public Auteur() {
+    }
 
     public Auteur(String nom, String prenom, String nationalite) {
         this.nom = nom;
