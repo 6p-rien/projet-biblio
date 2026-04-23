@@ -33,7 +33,8 @@ public class GenreAPIController {
     public GenreAPIController(IDAOGenre dao) {
         this.dao = dao;
     }
-
+    
+    @GetMapping
     public List<GenreResponse> findAll() {
         log.debug("Liste des genres ... ");
 
@@ -61,7 +62,8 @@ public class GenreAPIController {
 
         return new EntityCreatedOrUpdatedResponse(genre.getId());
     }
-
+    
+  
     @PutMapping("/{id}")
     public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id, @Valid @RequestBody CreateOrUpdateGenreRequest request) {
         log.debug("Modification d'un genre {} ...", id);
