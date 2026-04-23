@@ -11,7 +11,7 @@ public class CreateOrUpdateLivreRequest {
     @NotBlank
     private String titre;
 
-    private String resumer;
+    private String resume;
 
     @PositiveOrZero
     private int annee;
@@ -34,12 +34,12 @@ public class CreateOrUpdateLivreRequest {
         this.titre = titre;
     }
 
-    public String getResumer() {
-        return resumer;
+    public String getResume() {
+        return resume;
     }
 
-    public void setResumer(String resumer) {
-        this.resumer = resumer;
+    public void setResume(String resumer) {
+        this.resume = resumer;
     }
 
     public int getAnnee() {
