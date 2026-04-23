@@ -22,8 +22,6 @@ public class Editeur {
     @Column(length = 25, nullable = false)
     private String pays;
 
-    @Version
-    private int version;
 
     public Editeur() {
     }
