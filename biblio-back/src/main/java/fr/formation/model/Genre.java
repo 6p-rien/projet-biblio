@@ -17,11 +17,11 @@ public class Genre {
 	@Column(length = 20, nullable = false)
 	private String libelle;
 	
-	private Genre() {}
-	private Genre(String libelle) {
+	public Genre() {}
+	public Genre(String libelle) {
 		this.libelle =libelle;
 	}
-	private Genre(Integer id,String libelle) {
+	public Genre(Integer id,String libelle) {
 		this.id=id;
 		this.libelle =libelle;
 	}
