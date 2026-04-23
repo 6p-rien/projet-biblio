@@ -26,9 +26,15 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let collec of collec$ | async">
+        <tr *ngFor="let collec of collec$ | async" >
             <td>{{ collec.id }}</td>
-            <td>{{ collec.nom }}</td>
+            <td>
+                <input type="text" class="form-control" #nomInput [value]="collec.nom"/>
+                <div *ngIf="updateId === collec.id" class="valid-feedback d-block">Modification effectuée !</div>
+            </td>
+            <td>
+                <button class="btn btn-warning" (click)="updateCollec(collec.id, nomInput.value)">Modifier</button>
+            </td>
             <td>
                 <button class="btn btn-danger" (click)="deleteCollec(collec)">Supprimer</button>
             </td>

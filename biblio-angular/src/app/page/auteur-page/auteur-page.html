@@ -26,7 +26,7 @@
   </div>
 
   <div>
-    <input [disabled]="formAuteur.invalid" type="submit" class="btn btn-success" (click)="addAuteur()" value="Ajouter" />
+    <input [disabled]="formAuteur.invalid" type="submit" class="btn btn-success" value="Ajouter" />
   </div>
 </form>
 
@@ -36,8 +36,8 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nom</th>
       <th>Prénom</th>
+      <th>Nom</th>
       <th>Nationalité</th>
       <th></th>
       <th></th>
@@ -47,11 +47,11 @@
   <tbody>
     <tr *ngFor="let auteur of auteurs$ | async">
       <td>{{ auteur.id }}</td>
-      <td>{{ auteur.nom }}</td>
       <td>{{ auteur.prenom }}</td>
+      <td>{{ auteur.nom }}</td>
       <td>{{ auteur.nationalite }}</td>
       <td>
-        <button class="btn btn-danger" (click)="updateAuteur(auteur)">Modifier</button>
+        <button class="btn btn-warning" (click)="updateAuteur(auteur)">Modifier</button>
       </td>
       <td>
         <button class="btn btn-danger" (click)="deleteAuteur(auteur)">Supprimer</button>
