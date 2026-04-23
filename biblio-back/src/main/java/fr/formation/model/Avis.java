@@ -63,6 +63,8 @@ public class Avis {
     this.livre = livre;
   }
 
+  public Avis() {}
+
   public Avis(int note, String commentaire, LocalDate date, Livre livre) {
     this.note = note;
     this.commentaire = commentaire;

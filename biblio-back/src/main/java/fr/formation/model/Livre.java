@@ -1,3 +1,9 @@
 package fr.formation.model;
 
-public class Livre {}
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Livre {
+  @Id private int id;
+}
