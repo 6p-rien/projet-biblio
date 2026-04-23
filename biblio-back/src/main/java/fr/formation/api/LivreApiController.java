@@ -104,7 +104,7 @@ public class LivreApiController {
 
     private void fillFromRequest(Livre livre, CreateOrUpdateLivreRequest request) {
         livre.setTitre(request.getTitre());
-        livre.setResumer(request.getResumer());
+        livre.setResume(request.getResume());
         livre.setAnnee(request.getAnnee());
         livre.setAuteur(this.auteurDao.findById(request.getAuteurId()).orElseThrow(EntityNotFoundException::new));
         livre.setEditeur(this.editeurDao.findById(request.getEditeurId()).orElseThrow(EntityNotFoundException::new));

@@ -31,7 +31,7 @@ public class Livre {
     private String titre;
 
     @Column(nullable = true, length = 256)
-    private String resumer;
+    private String resume;
 
     @Column(nullable = true)
     @PositiveOrZero
@@ -65,8 +65,8 @@ public class Livre {
     public String getTitre() { return titre; }
     public void setTitre(String titre) { this.titre = titre; }
 
-    public String getResumer() { return resumer; }
-    public void setResumer(String resumer) { this.resumer = resumer; }
+    public String getResume() { return resume; }
+    public void setResume(String resume) { this.resume = resume; }
 
     public int getAnnee() { return annee; }
     public void setAnnee(int annee) { this.annee = annee; }
