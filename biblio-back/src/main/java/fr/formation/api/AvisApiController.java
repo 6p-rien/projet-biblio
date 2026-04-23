@@ -1,10 +1,12 @@
 package fr.formation.api;
 
 import fr.formation.dao.IDAOAvis;
+import fr.formation.dao.IDAOLivre;
 import fr.formation.dto.request.CreateOrUpdateAvisRequest;
 import fr.formation.dto.response.AvisResponse;
 import fr.formation.dto.response.EntityCreatedOrUpdatedResponse;
 import fr.formation.exception.AvisNotFoundException;
+import fr.formation.exception.LivreNotFoundException;
 import fr.formation.model.Avis;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -25,22 +27,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/avis")
 public class AvisApiController {
   private static final Logger log = LoggerFactory.getLogger(AvisApiController.class);
-  private final IDAOAvis dao;
+  private final IDAOAvis daoAvis;
+  private final IDAOLivre daoLivre;
 
-  public AvisApiController(IDAOAvis dao) {
-    this.dao = dao;
+  public AvisApiController(IDAOAvis daoAvis, IDAOLivre daoLivre) {
+    this.daoAvis = daoAvis;
+    this.daoLivre = daoLivre;
   }
 
   @GetMapping
   public List<AvisResponse> findAll() {
     log.debug("Liste des avis ...");
-    return this.dao.findAll().stream().map(AvisResponse::convert).toList();
+    return this.daoAvis.findAll().stream().map(AvisResponse::convert).toList();
   }
 
   @GetMapping("/{id}")
   public AvisResponse findById(@PathVariable Integer id) {
     log.debug("Avis {} ...", id);
-    return this.dao.findById(id).map(AvisResponse::convert).orElseThrow(AvisNotFoundException::new);
+    return this.daoAvis
+        .findById(id)
+        .map(AvisResponse::convert)
+        .orElseThrow(AvisNotFoundException::new);
   }
 
   @PostMapping
@@ -52,9 +59,9 @@ public class AvisApiController {
     avis.setNote(request.getNote());
     avis.setCommentaire(request.getCommentaire());
     avis.setDate(request.getDate());
-    avis.setLivre(request.getLivre());
+    avis.setLivre(daoLivre.findById(request.getIdLivre()).orElseThrow(LivreNotFoundException::new));
 
-    this.dao.save(avis);
+    this.daoAvis.save(avis);
     log.debug("Avis {} cree !", avis.getId());
 
     return new EntityCreatedOrUpdatedResponse(avis.getId());
@@ -65,13 +72,13 @@ public class AvisApiController {
       @PathVariable Integer id, @Valid @RequestBody CreateOrUpdateAvisRequest request) {
     log.debug("Modification de avis {} ...", id);
 
-    Avis avis = this.dao.findById(id).orElseThrow(AvisNotFoundException::new);
+    Avis avis = this.daoAvis.findById(id).orElseThrow(AvisNotFoundException::new);
     avis.setNote(request.getNote());
     avis.setCommentaire(request.getCommentaire());
     avis.setDate(request.getDate());
-    avis.setLivre(request.getLivre());
+    avis.setLivre(daoLivre.findById(request.getIdLivre()).orElseThrow(LivreNotFoundException::new));
 
-    this.dao.save(avis);
+    this.daoAvis.save(avis);
     log.debug("Avis {} modifie !", id);
 
     return new EntityCreatedOrUpdatedResponse(avis.getId());
@@ -81,7 +88,7 @@ public class AvisApiController {
   public void deleteById(@PathVariable Integer id) {
     log.debug("Suppression de l'avis {} ...", id);
 
-    this.dao.deleteById(id);
+    this.daoAvis.deleteById(id);
 
     log.debug("Avis {} supprime !", id);
   }

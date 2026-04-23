@@ -1,6 +1,5 @@
 package fr.formation.dto.request;
 
-import fr.formation.model.Livre;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -8,7 +7,7 @@ public class CreateOrUpdateAvisRequest {
   private int note;
   @NotBlank private String commentaire;
   private LocalDate date;
-  private Livre livre;
+  private int idLivre;
 
   public int getNote() {
     return note;
@@ -22,7 +21,7 @@ public class CreateOrUpdateAvisRequest {
     return date;
   }
 
-  public Livre getLivre() {
-    return livre;
+  public int getIdLivre() {
+    return idLivre;
   }
 }
