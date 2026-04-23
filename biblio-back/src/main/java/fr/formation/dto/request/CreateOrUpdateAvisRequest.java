@@ -5,10 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class CreateOrUpdateAvisRequest {
-  @NotBlank private int note;
+  private int note;
   @NotBlank private String commentaire;
-  @NotBlank private LocalDate date;
-  @NotBlank private Livre livre;
+  private LocalDate date;
+  private Livre livre;
 
   public int getNote() {
     return note;
