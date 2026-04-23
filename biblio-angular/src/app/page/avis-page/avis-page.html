@@ -1,0 +1,21 @@
+<div>
+  <form ></form>
+
+  <table>
+  <tr>
+    <th>Note</th>
+    <th>Commentaire</th>
+    <th>Date</th>
+    <th>Livre</th>
+  </tr>
+  @for(avis of (avis$|async); track avis.id){
+  <tr>
+    <td>{{avis.note}}</td>
+    <td>{{avis.commentaire}}</td>
+    <td>{{avis.date}}</td>
+    <td>{{avis.livre}}</td>
+  </tr>
+
+  }
+  </table>
+</div>
