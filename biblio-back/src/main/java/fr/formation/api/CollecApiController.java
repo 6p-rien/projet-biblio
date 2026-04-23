@@ -21,10 +21,7 @@ import fr.formation.dto.response.CollecResponse;
 import fr.formation.dto.response.EntityCreatedOrUpdatedResponse;
 import fr.formation.exception.CollecNotFoundException;
 import fr.formation.model.Collec;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-
-
 
 @RestController
 @RequestMapping("api/collec")
@@ -50,7 +47,7 @@ public class CollecApiController {
 
         return this.dao.findById(id).map(CollecResponse::convert).orElseThrow(CollecNotFoundException::new);
     }
-    
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityCreatedOrUpdatedResponse create(@Valid @RequestBody CreateOrUpdateCollecRequest request) {
@@ -68,7 +65,8 @@ public class CollecApiController {
     }
 
     @PutMapping("/{id}")
-    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id, @Valid @RequestBody CreateOrUpdateCollecRequest request) {
+    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id,
+            @Valid @RequestBody CreateOrUpdateCollecRequest request) {
         log.debug("Collec appel de l'api Modification : {} ...", id);
 
         Collec collec = this.dao.findById(id).orElseThrow(CollecNotFoundException::new);

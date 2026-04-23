@@ -26,14 +26,14 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/genre")
 public class GenreAPIController {
-	private static final Logger log = LoggerFactory.getLogger(GenreAPIController.class);
+    private static final Logger log = LoggerFactory.getLogger(GenreAPIController.class);
 
     private final IDAOGenre dao;
 
     public GenreAPIController(IDAOGenre dao) {
         this.dao = dao;
     }
-    
+
     @GetMapping
     public List<GenreResponse> findAll() {
         log.debug("Liste des genres ... ");
@@ -41,7 +41,7 @@ public class GenreAPIController {
         return this.dao.findAll().stream().map(GenreResponse::convert).toList();
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public GenreResponse findById(@PathVariable Integer id) {
         log.debug("Genre {} ...", id);
 
@@ -62,16 +62,16 @@ public class GenreAPIController {
 
         return new EntityCreatedOrUpdatedResponse(genre.getId());
     }
-    
-  
+
     @PutMapping("/{id}")
-    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id, @Valid @RequestBody CreateOrUpdateGenreRequest request) {
+    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id,
+            @Valid @RequestBody CreateOrUpdateGenreRequest request) {
         log.debug("Modification d'un genre {} ...", id);
 
         Genre genre = this.dao.findById(id).orElseThrow(EntityNotFoundException::new);
 
         genre.setLibelle(request.getLibelle());
-        
+
         this.dao.save(genre);
 
         log.debug("Genre {} modifié !", id);
