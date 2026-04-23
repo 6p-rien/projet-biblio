@@ -17,7 +17,7 @@ public class Collec {
 
     public Collec() {}
 
-    public Collec(Integer id, String libelle) {
+    public Collec(Integer id, String nom) {
         this.id = id;
         this.nom = nom;
     }
@@ -34,7 +34,7 @@ public class Collec {
         return nom;
     }
 
-    public void setNom(String libelle) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
