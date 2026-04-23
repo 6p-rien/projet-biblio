@@ -60,7 +60,7 @@ export class AuteurPage implements OnInit {
     this.auteurService.add(auteur).subscribe(() => this.reload());
   }
 
-  public updateAuteur(id: number, auteur: Auteur) {
+  public updateAuteur(auteur: Auteur) {
     this.auteurService.update(auteur.id, auteur).subscribe(() => this.reload());
   }
 
