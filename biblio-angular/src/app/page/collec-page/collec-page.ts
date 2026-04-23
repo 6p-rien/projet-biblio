@@ -21,6 +21,8 @@ export class CollecPage {
   protected formCollec!: FormGroup;
   protected formNomCtrl!: FormControl;
 
+  protected updateId: number | null = null;
+
   ngOnInit(): void {
     
     this.collec$ = this.refresh$.pipe(
@@ -50,8 +52,11 @@ export class CollecPage {
     this.collecService.add(collec).subscribe(() => this.reload());
   }
 
-  public updateCollec(collec: Collec) {
-    this.collecService.update(collec.id, collec).subscribe(() => this.reload());
+  public updateCollec(id: number, nom: string) {
+    this.collecService.update(id, nom).subscribe(() => {
+      this.updateId = id;
+      this.reload();
+    });
   }
 
   public deleteCollec(collec: Collec) {
