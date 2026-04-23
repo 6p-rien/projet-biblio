@@ -1,0 +1,32 @@
+<h1>auteur-page works!</h1>
+
+<form>
+  <div class="mb-3 row">
+    <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="nom" formControlName="nom" [class.is-invalid]="formNomCtrl.invalid" />
+        <div *ngIf="formNomCtrl.hasError('required')" class="invalid-feedback">Le nom est obligatoire</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="prenom" class="col-sm-2 col-form-label">Prénom</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="prenom" formControlName="prenom" [class.is-invalid]="formPrenomCtrl.invalid" />
+        <div *ngIf="formPrenomCtrl.hasError('required')" class="invalid-feedback">Le prénom est obligatoire</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="nationalite" class="col-sm-2 col-form-label">Nationalité</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="nationalite" formControlName="nationalite" [class.is-invalid]="formNationaliteCtrl.invalid" />
+        <div *ngIf="formNationaliteCtrl.hasError('required')" class="invalid-feedback">La nationalité est obligatoire</div>
+    </div>
+  </div>
+
+  <div>
+    <input [disabled]="formAuteur.invalid" type="submit" class="btn btn-success" (click)="addAuteur()" value="Ajouter" />
+  </div>
+
+</form>
