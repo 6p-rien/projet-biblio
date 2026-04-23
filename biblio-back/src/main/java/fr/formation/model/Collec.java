@@ -13,13 +13,13 @@ public class Collec {
     private Integer id;
 
     @Column(length = 150,nullable = false)
-	private String libelle;
+	private String nom;
 
     public Collec() {}
 
     public Collec(Integer id, String libelle) {
         this.id = id;
-        this.libelle = libelle;
+        this.nom = nom;
     }
 
     public Integer getId() {
@@ -30,17 +30,17 @@ public class Collec {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getNom() {
+        return nom;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setNom(String libelle) {
+        this.nom = nom;
     }
 
     @Override
     public String toString() {
-        return "Collection [id=" + id + ", libelle=" + libelle + "]";
+        return "Collection [id=" + id + ", nom=" + nom + "]";
     }
 
     

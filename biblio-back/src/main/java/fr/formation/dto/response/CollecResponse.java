@@ -23,7 +23,7 @@ public class CollecResponse {
         CollecResponse response = new CollecResponse();
 
         response.setId(collec.getId());
-        response.setNom(collec.getLibelle());
+        response.setNom(collec.getNom());
 
         return response;
     }
