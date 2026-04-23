@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Observable, startWith, Subject, switchMap } from 'rxjs';
@@ -8,16 +8,16 @@ import { AuteurService } from '../../service/auteur-service';
 
 @Component({
   selector: 'app-auteur-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ CommonModule, ReactiveFormsModule ],
   templateUrl: './auteur-page.html',
   styleUrl: './auteur-page.css',
 })
-export class AuteurPage {
+export class AuteurPage implements OnInit {
   private titleService: Title = inject(Title);
   private auteurService: AuteurService = inject(AuteurService);
   private formBuilder: FormBuilder = inject(FormBuilder);
 
-  protected auteur$!: Observable<Auteur[]>;
+  protected auteurs$!: Observable<Auteur[]>;
   private refresh$: Subject<void> = new Subject<void>();
 
   protected formAuteur!: FormGroup;
@@ -29,7 +29,7 @@ export class AuteurPage {
     this.titleService.setTitle('Liste des auteurs');
 
     // FindAll avec rechargement automatique
-    this.auteur$ = this.refresh$.pipe(
+    this.auteurs$ = this.refresh$.pipe(
       startWith(0),
       switchMap(() => this.auteurService.findAll()),
     );
@@ -58,6 +58,10 @@ export class AuteurPage {
     };
 
     this.auteurService.add(auteur).subscribe(() => this.reload());
+  }
+
+  public updateAuteur(id: number, auteur: Auteur) {
+    this.auteurService.update(auteur.id, auteur).subscribe(() => this.reload());
   }
 
   public deleteAuteur(auteur: Auteur) {

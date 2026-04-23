@@ -14,7 +14,11 @@ export class AuteurService {
   }
 
   public add(auteur: Auteur): Observable<Auteur> {
-    return this.http.post<Auteur>('/matiere', auteur);
+    return this.http.post<Auteur>('/auteur', auteur);
+  }
+
+  public update(id: number, auteur: Auteur): Observable<Auteur> {
+    return this.http.put<Auteur>(`/auteur/${id}`, auteur);
   }
 
   public deleteById(id: number): Observable<void> {

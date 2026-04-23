@@ -1,6 +1,6 @@
-<h1>auteur-page works!</h1>
+<h1>Auteurs</h1>
 
-<form>
+<form (submit)="addAuteur()" [formGroup]="formAuteur">
   <div class="mb-3 row">
     <label for="nom" class="col-sm-2 col-form-label">Nom</label>
     <div class="col-sm-4">
@@ -28,5 +28,35 @@
   <div>
     <input [disabled]="formAuteur.invalid" type="submit" class="btn btn-success" (click)="addAuteur()" value="Ajouter" />
   </div>
-
 </form>
+
+<hr />
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Nationalité</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let auteur of auteurs$ | async">
+      <td>{{ auteur.id }}</td>
+      <td>{{ auteur.nom }}</td>
+      <td>{{ auteur.prenom }}</td>
+      <td>{{ auteur.nationalite }}</td>
+      <td>
+        <button class="btn btn-danger" (click)="updateAuteur(auteur.id, auteur)">Modifier</button>
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="deleteAuteur(auteur)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
