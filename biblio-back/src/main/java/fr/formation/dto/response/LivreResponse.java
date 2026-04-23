@@ -7,12 +7,12 @@ import fr.formation.model.Livre;
 public class LivreResponse {
     private Integer id;
     private String titre;
-    private String resumer;
+    private String resume;
     private int annee;
-    private Integer auteurId;
-    private Integer editeurId;
-    private Integer collectionId;
-    private List<Integer> genreIds;
+    private AuteurResponse auteur;
+    private EditeurResponse editeur;
+    private CollecResponse collection;
+    private List<GenreResponse> genres;
 
     public Integer getId() {
         return id;
@@ -30,12 +30,12 @@ public class LivreResponse {
         this.titre = titre;
     }
 
-    public String getResumer() {
-        return resumer;
+    public String getResume() {
+        return resume;
     }
 
-    public void setResumer(String resumer) {
-        this.resumer = resumer;
+    public void setResume(String resume) {
+        this.resume = resume;
     }
 
     public int getAnnee() {
@@ -46,36 +46,36 @@ public class LivreResponse {
         this.annee = annee;
     }
 
-    public Integer getAuteurId() {
-        return auteurId;
+    public AuteurResponse getAuteur() {
+        return auteur;
     }
 
-    public void setAuteurId(Integer auteurId) {
-        this.auteurId = auteurId;
+    public void setAuteur(AuteurResponse auteur) {
+        this.auteur = auteur;
     }
 
-    public Integer getEditeurId() {
-        return editeurId;
+    public EditeurResponse getEditeur() {
+        return editeur;
     }
 
-    public void setEditeurId(Integer editeurId) {
-        this.editeurId = editeurId;
+    public void setEditeur(EditeurResponse editeur) {
+        this.editeur = editeur;
     }
 
-    public Integer getCollectionId() {
-        return collectionId;
+    public CollecResponse getCollection() {
+        return collection;
     }
 
-    public void setCollectionId(Integer collectionId) {
-        this.collectionId = collectionId;
+    public void setCollection(CollecResponse collection) {
+        this.collection = collection;
     }
 
-    public List<Integer> getGenreIds() {
-        return genreIds;
+    public List<GenreResponse> getGenres() {
+        return genres;
     }
 
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
+    public void setGenres(List<GenreResponse> genres) {
+        this.genres = genres;
     }
 
     public static LivreResponse convert(Livre livre) {
@@ -83,12 +83,12 @@ public class LivreResponse {
 
         response.setId(livre.getId());
         response.setTitre(livre.getTitre());
-        response.setResumer(livre.getResumer());
+        response.setResume(livre.getResume());
         response.setAnnee(livre.getAnnee());
-        response.setAuteurId(livre.getAuteur() != null ? livre.getAuteur().getId() : null);
-        response.setEditeurId(livre.getEditeur() != null ? livre.getEditeur().getId() : null);
-        response.setCollectionId(livre.getCollection() != null ? livre.getCollection().getId() : null);
-        response.setGenreIds(livre.getGenres().stream().map(g -> g.getId()).toList());
+        response.setAuteur(livre.getAuteur() != null ? AuteurResponse.convert(livre.getAuteur()) : null);
+        response.setEditeur(livre.getEditeur() != null ? EditeurResponse.convert(livre.getEditeur()) : null);
+        response.setCollection(livre.getCollection() != null ? CollecResponse.convert(livre.getCollection()) : null);
+        response.setGenres(livre.getGenres().stream().map(GenreResponse::convert).toList());
 
         return response;
     }
