@@ -6,5 +6,4 @@ import fr.formation.model.Editeur;
 
 public interface DAOEditeur extends JpaRepository<Editeur, Integer> {
 
-
 }

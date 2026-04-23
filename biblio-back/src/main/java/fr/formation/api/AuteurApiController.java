@@ -1,6 +1,5 @@
 package fr.formation.api;
 
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public class AuteurApiController {
         return this.dao.findAll().stream().map(AuteurResponse::convert).toList();
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public AuteurResponse findById(@PathVariable Integer id) {
         log.debug("Auteur {} ...", id);
 
@@ -68,7 +67,8 @@ public class AuteurApiController {
     }
 
     @PutMapping("/{id}")
-    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id, @Valid @RequestBody CreateOrUpdateAuteurRequest request) {
+    public EntityCreatedOrUpdatedResponse update(@PathVariable Integer id,
+            @Valid @RequestBody CreateOrUpdateAuteurRequest request) {
         log.debug("Modification de l'auteur {} ...", id);
 
         Auteur auteur = this.dao.findById(id).orElseThrow(EntityNotFoundException::new);

@@ -13,5 +13,5 @@ public class CreateOrUpdateCollecRequest {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    
+
 }
