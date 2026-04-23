@@ -16,6 +16,10 @@ export class EditeurService {
   public add(editeur: Editeur): Observable<Editeur> {
     return this.http.post<Editeur>("/editeur", editeur);
   }
+  
+  public update(id: number, editeur: Editeur): Observable<Editeur> {
+    return this.http.put<Editeur>(`/editeur/${id}`, editeur);
+  }
 
   public deleteById(id: number): Observable<void> {
     return this.http.delete<void>(`/editeur/${id}`);
