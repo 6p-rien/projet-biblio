@@ -11,28 +11,34 @@ public class AuteurResponse {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getNom() {
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
+
     public String getPrenom() {
         return prenom;
     }
+
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
     public String getNationalite() {
         return nationalite;
     }
+
     public void setNationalite(String nationalite) {
         this.nationalite = nationalite;
     }
-
 
     public static AuteurResponse convert(Auteur auteur) {
         AuteurResponse response = new AuteurResponse();
@@ -44,6 +50,5 @@ public class AuteurResponse {
 
         return response;
     }
-
 
 }

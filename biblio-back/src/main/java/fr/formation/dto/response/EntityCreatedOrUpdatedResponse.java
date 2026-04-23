@@ -6,6 +6,7 @@ public class EntityCreatedOrUpdatedResponse {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -13,6 +14,4 @@ public class EntityCreatedOrUpdatedResponse {
     public EntityCreatedOrUpdatedResponse(int id) {
         this.id = id;
     }
-
-
 }
