@@ -12,12 +12,13 @@ public class Collec {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 150,nullable = false)
-	private String nom;
+    @Column(length = 150, nullable = false)
+    private String nom;
 
-    public Collec() {}
+    public Collec() {
+    }
 
-    public Collec(Integer id, String libelle) {
+    public Collec(Integer id, String nom) {
         this.id = id;
         this.nom = nom;
     }
@@ -34,7 +35,7 @@ public class Collec {
         return nom;
     }
 
-    public void setNom(String libelle) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
@@ -43,5 +44,4 @@ public class Collec {
         return "Collection [id=" + id + ", nom=" + nom + "]";
     }
 
-    
 }
