@@ -35,6 +35,7 @@ public class AuteurApiController {
         this.dao = dao;
     }
 
+    @GetMapping
     public List<AuteurResponse> findAll() {
         log.debug("Liste des auteurs ... ");
 
