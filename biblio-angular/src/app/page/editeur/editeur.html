@@ -8,9 +8,7 @@
       <input type="text" class="form-control" id="nom"
       formControlName="nom"
       [class.is-invalid]="formNomCtrl.invalid" />
-      <div *ngIf="formNomCtrl.hasError('required')" class="invalid-feedback">
-        Le nom est obligatoire
-      </div>
+      <div *ngIf="formNomCtrl.hasError('required')" class="invalid-feedback">Le nom est obligatoire</div>
     </div>
   </div>
 

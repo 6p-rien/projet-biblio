@@ -10,18 +10,18 @@ export class EditeurService {
   constructor(private http: HttpClient) { }
 
   public findAll(): Observable<Editeur[]> {
-    return this.http.get<Editeur[]>("/api/editeur");
+    return this.http.get<Editeur[]>("/editeur");
   }
 
   public add(editeur: Editeur): Observable<Editeur> {
-    return this.http.post<Editeur>("/api/editeur", editeur);
+    return this.http.post<Editeur>("/editeur", editeur);
   }
 
   public update(id: number, editeur: Editeur): Observable<Editeur> {
-    return this.http.put<Editeur>(`/api/editeur/${id}`, editeur);
+    return this.http.put<Editeur>(`/editeur/${id}`, editeur);
   }
 
   public deleteById(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/editeur/${id}`);
+    return this.http.delete<void>(`/editeur/${id}`);
   }
 }
