@@ -12,7 +12,7 @@
     <div>
         <input [disabled]="formGenre.invalid" type="submit" class="btn btn-success" value="Ajouter" />
     </div>
-</form>
+</form> 
 
 <hr />
 
@@ -29,11 +29,11 @@
         <tr *ngFor="let genre of genres$ | async" >
             <td>{{ genre.id }}</td>
             <td>
-                <input type="text" class="form-control" #nomInput [value]="genre.libelle"/>
+                <input type="text" class="form-control" #libelleInput [value]="genre.libelle"/>
                 <div *ngIf="updateId === genre.id" class="valid-feedback d-block">Modification effectuée !</div>
             </td>
             <td>
-                <button class="btn btn-warning" (click)="updateGenre(genre.id, nomInput.value)">Modifier</button>
+                <button class="btn btn-warning" (click)="updateGenre(genre.id, libelleInput.value)">Modifier</button>
             </td>
             <td>
                 <button class="btn btn-danger" (click)="deleteGenre(genre)">Supprimer</button>

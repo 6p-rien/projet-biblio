@@ -1,0 +1,76 @@
+# Le nom du compose, optionel
+name: biblio-compose
+
+# Décrire tous les services, volumes, network, etc. nécessaire au bon fonctionnement
+
+# Descrription des différents containers
+services:
+# Description du container "PostgreSQL"
+  mysql:
+    image: mysql:8.0.45
+    container_name: app-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+    volumes:
+# Pour initialiser la base
+      - ./biblio-back/demo-init.sql:/docker-entrypoint-initdb.d/init.sql
+
+# Pour persister les données après suppression / mise à jour du container
+      - mysql_data:/var/lib/mysql
+
+    networks:
+      - biblio-network
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 3s
+      retries: 10
+      interval: 5s
+
+
+
+  java:
+    build:
+      context: .
+      dockerfile: biblio-back/Dockerfile
+      network: host
+    image: biblio-back
+    container_name: biblio-back
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/projet_biblio?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+
+    networks:
+      - biblio-network
+
+    ports:
+      - 8080:8080
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: biblio-angular/Dockerfile
+    image: biblio-angular
+    container_name: angular
+    ports:
+      - 4201:4201
+    networks:
+      - biblio-network
+    depends_on:
+      - java
+
+
+networks:
+  biblio-network:
+    name: demo-nom-rso
+
+volumes:
+  mysql_data:
+    name: demo-mysql-data

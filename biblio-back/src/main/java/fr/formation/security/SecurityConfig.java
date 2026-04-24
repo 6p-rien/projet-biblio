@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowedMethods(List.of("*"));
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4201"));
 
         corsSource.registerCorsConfiguration("/**", corsConfiguration);
 
