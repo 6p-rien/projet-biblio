@@ -47,11 +47,20 @@
   <tbody>
     <tr *ngFor="let auteur of auteurs$ | async">
       <td>{{ auteur.id }}</td>
-      <td>{{ auteur.prenom }}</td>
-      <td>{{ auteur.nom }}</td>
-      <td>{{ auteur.nationalite }}</td>
       <td>
-        <button class="btn btn-warning" (click)="updateAuteur(auteur)">Modifier</button>
+        <input type="text" class="form-control" #prenomInput [value]="auteur.prenom"/>
+        <div *ngIf="updateId === auteur.id" class="valid-feedback d-block">Modification effectuée !</div>
+      </td>
+      <td>
+        <input type="text" class="form-control" #nomInput [value]="auteur.nom"/>
+        <div *ngIf="updateId === auteur.id" class="valid-feedback d-block">Modification effectuée !</div>
+      </td>
+      <td>
+        <input type="text" class="form-control" #nationaliteInput [value]="auteur.nationalite"/>
+        <div *ngIf="updateId === auteur.id" class="valid-feedback d-block">Modification effectuée !</div>
+      </td>
+      <td>
+        <button class="btn btn-warning" (click)="updateAuteur(auteur.id, nomInput.value, prenomInput.value, nationaliteInput.value)">Modifier</button>
       </td>
       <td>
         <button class="btn btn-danger" (click)="deleteAuteur(auteur)">Supprimer</button>

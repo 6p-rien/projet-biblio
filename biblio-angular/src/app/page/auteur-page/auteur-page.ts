@@ -8,7 +8,7 @@ import { AuteurService } from '../../service/auteur-service';
 
 @Component({
   selector: 'app-auteur-page',
-  imports: [ CommonModule, ReactiveFormsModule ],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auteur-page.html',
   styleUrl: './auteur-page.css',
 })
@@ -19,6 +19,7 @@ export class AuteurPage implements OnInit {
 
   protected auteurs$!: Observable<Auteur[]>;
   private refresh$: Subject<void> = new Subject<void>();
+  protected updateId: number | null = null;
 
   protected formAuteur!: FormGroup;
   protected formNomCtrl!: FormControl;
@@ -60,8 +61,17 @@ export class AuteurPage implements OnInit {
     this.auteurService.add(auteur).subscribe(() => this.reload());
   }
 
-  public updateAuteur(auteur: Auteur) {
-    this.auteurService.update(auteur.id, auteur).subscribe(() => this.reload());
+  public updateAuteur(id: number, nom: string, prenom: string, nationalite: string) {
+    const auteur: Auteur = {
+      id: id,
+      nom: nom,
+      prenom: prenom,
+      nationalite: nationalite,
+    };
+    this.auteurService.update(id, auteur).subscribe(() => {
+      this.updateId = id;
+      this.reload()
+    });
   }
 
   public deleteAuteur(auteur: Auteur) {
