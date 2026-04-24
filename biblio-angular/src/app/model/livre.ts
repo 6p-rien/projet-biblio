@@ -14,8 +14,6 @@ export interface Livre {
   genres: Array<Genre>;
 }
 
-
-
 export interface LivreOnlyId {
   titre: string;
   resume: string | null;
@@ -25,5 +23,3 @@ export interface LivreOnlyId {
   collectionId: number | null;
   genreIds: Array<number>;
 }
-
-
