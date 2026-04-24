@@ -1,0 +1,42 @@
+<h1>Se connecter</h1>
+
+<form [formGroup]="formAuth" novalidate>
+    <div class="mb-3 row">
+        <label for="username" class="col-sm-2 col-form-label">Nom d'utilisateur</label>
+        <div class="col-sm-10">
+            <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+            />
+            @if (formAuth.controls.username.hasError('required') && formAuth.controls.username.touched) {
+                <small class="text-danger">Le username est obligatoire.</small>
+            }
+            @if (formAuth.controls.username.hasError('lowercaseOnly') && formAuth.controls.username.touched) {
+                <small class="text-danger">Le nom d'utilisateur doit etre compose de lettres minuscules exclusivement.</small>
+            }
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
+        <div class="col-sm-10">
+            <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+            />
+            @if (formAuth.controls.password.invalid && formAuth.controls.password.touched) {
+                <small class="text-danger">Le password est obligatoire.</small>
+            }
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-success" type="button" [disabled]="formAuth.invalid" (click)="connexion()">
+            Se connecter
+        </button>
+    </div>
+</form>
