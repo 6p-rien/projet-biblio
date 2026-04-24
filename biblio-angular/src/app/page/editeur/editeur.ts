@@ -24,6 +24,7 @@ export class EditeurPage implements OnInit {
   protected formEditeur!: FormGroup;
   protected formNomCtrl!: FormControl;
   protected formPaysCtrl!: FormControl;
+  protected updateId: number | null = null;
 
   ngOnInit(): void {
     this.titleService.setTitle("Liste des éditeurs");
@@ -55,6 +56,16 @@ export class EditeurPage implements OnInit {
     };
 
     this.editeurService.add(editeur).subscribe(() => this.reload());
+  }
+
+
+
+  public updateEditeur(id: number, nom: string, pays: string) {
+    const editeur: Editeur = { id, nom, pays };
+    this.editeurService.update(id, editeur).subscribe(() => {
+      this.updateId = id;
+      this.reload();
+    });
   }
 
   public deleteEditeur(editeur: Editeur) {
