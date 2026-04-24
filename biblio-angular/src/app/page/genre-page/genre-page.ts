@@ -4,16 +4,15 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { Title } from '@angular/platform-browser';
 import { Observable, startWith, Subject, switchMap } from 'rxjs';
 import { Genre } from '../../model/genre';
-import { GenreService } from '../../service/genre';
+import { GenreService } from '../../service/genre-service';
 
 @Component({
   selector: 'app-genre',
-  imports: [ CommonModule, ReactiveFormsModule ],
-  templateUrl: './genre.html',
-  styleUrl: './genre.css',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './genre-page.html',
+  styleUrl: './genre-page.css',
 })
 export class GenrePage implements OnInit {
-
   private titleService = inject(Title);
   private genreService = inject(GenreService);
   private formBuilder = inject(FormBuilder);
@@ -21,23 +20,23 @@ export class GenrePage implements OnInit {
   protected genres$!: Observable<Genre[]>;
   private refresh$ = new Subject<void>();
 
-  protected formEditeur!: FormGroup;
+  protected formGenre!: FormGroup;
   protected formLibelleCtrl!: FormControl;
 
   protected updateId: number | null = null;
 
   ngOnInit(): void {
-    this.titleService.setTitle("Liste des genres");
+    this.titleService.setTitle('Liste des genres');
 
     this.genres$ = this.refresh$.pipe(
       startWith(0),
-      switchMap(() => this.genreService.findAll())
+      switchMap(() => this.genreService.findAll()),
     );
 
     // Création des contrôles
-    this.formLibelleCtrl = this.formBuilder.control("", Validators.required);
+    this.formLibelleCtrl = this.formBuilder.control('', Validators.required);
 
-    this.formEditeur = this.formBuilder.group({
+    this.formGenre = this.formBuilder.group({
       libelle: this.formLibelleCtrl,
     });
   }

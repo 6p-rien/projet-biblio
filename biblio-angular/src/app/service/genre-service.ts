@@ -13,8 +13,8 @@ export class GenreService {
     return this.http.get<Genre[]>("/collec");
   }
 
-  public update(id: number, nom: string): Observable<Genre> {
-    const genre: Genre = { id, nom };
+  public update(id: number, libelle: string): Observable<Genre> {
+    const genre: Genre = { id, libelle };
     return this.http.put<Genre>(`/collec/${ id }`, genre);
   }
 
@@ -26,4 +26,3 @@ export class GenreService {
     return this.http.delete<void>(`/collec/${ id }`);
   }
 }
- 
