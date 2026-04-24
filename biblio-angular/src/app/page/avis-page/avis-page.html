@@ -45,13 +45,16 @@
 
       <div class="col-md-3">
         <label for="livre" class="form-label">Livre</label>
-        <input
-          type="number"
+        <select
           class="form-control"
           id="livre"
           [class.is-invalid]="formLivreCtrl.invalid"
           formControlName="livre"
-        />
+        >
+          @for (livre of livres$ | async; track livre.id) {
+            <option [value]="livre.id">{{ livre.titre }}</option>
+          }
+        </select>
         @if (formLivreCtrl.hasError('required')) {
           <div class="invalid-feedback">Le livre est obligatoire</div>
         }
@@ -62,23 +65,37 @@
       <input [disabled]="formAvis.invalid" type="submit" class="btn btn-success" value="Poster" />
     </div>
   </form>
-  <table>
-    <tr>
-      <th>Note</th>
-      <th>Commentaire</th>
-      <th>Date</th>
-      <th>Livre</th>
-    </tr>
-    @for (avis of avis$ | async; track avis.id) {
+  <hr />
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td>{{ avis.note }}</td>
-        <td>{{ avis.commentaire }}</td>
-        <td>{{ avis.date }}</td>
-        <td>{{ avis.livre.titre }}</td>
-        <td><button type="button" (click)="openEditModal(avis)">Modifier</button></td>
-        <td><button type="button" (click)="deleteAvis(avis)">Supprimer</button></td>
+        <th>Note</th>
+        <th>Commentaire</th>
+        <th>Date</th>
+        <th>Livre</th>
+        <th></th>
       </tr>
-    }
+    </thead>
+    <tbody>
+      @for (avis of avis$ | async; track avis.id) {
+        <tr>
+          <td>{{ avis.note }}</td>
+          <td>{{ avis.commentaire }}</td>
+          <td>{{ avis.date | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ avis.livre.titre }}</td>
+          <td>
+            <button type="button" class="btn btn-warning" (click)="openEditModal(avis)">
+              Modifier
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="deleteAvis(avis)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
   </table>
   @if (isEditOpen) {
     <div class="modal-backdrop-custom">
@@ -130,12 +147,16 @@
 
             <div class="col-md-3">
               <label for="livre" class="form-label">Livre</label>
-              <input
-                type="number"
+              <select
                 class="form-control"
                 id="livre"
-                [class.is-invalid]="formEditLivreCtrl.invalid"
+                [class.is-invalid]="formLivreCtrl.invalid"
                 formControlName="livre"
+              >
+                @for (livre of livres$ | async; track livre.id) {
+                  <option [value]="livre.id">{{ livre.titre }}</option>
+                }
+              </select>
               />
               @if (formEditLivreCtrl.hasError('required')) {
                 <div class="invalid-feedback">Le livre est obligatoire</div>
@@ -150,7 +171,9 @@
               class="btn btn-success"
               value="Modifier"
             />
-            <button type="button" class="btn" (click)="closeEditModal()">Annuler</button>
+            <button type="button btn-warning" class="btn" (click)="closeEditModal()">
+              Annuler
+            </button>
           </div>
         </form>
       </div>

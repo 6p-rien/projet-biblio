@@ -11,6 +11,8 @@ import {
 import { Observable, startWith, Subject, switchMap } from 'rxjs';
 import { Avis, AvisCreateUpdate } from '../../model/avis';
 import { CommonModule } from '@angular/common';
+import { Livre } from '../../model/livre';
+import { LivreService } from '../../service/livre-service';
 
 @Component({
   selector: 'app-avis-page',
@@ -21,9 +23,11 @@ import { CommonModule } from '@angular/common';
 export class AvisPage implements OnInit {
   private titleService: Title = inject(Title);
   private avisService: AvisService = inject(AvisService);
+  private livreService: LivreService = inject(LivreService);
   private formBuilder: FormBuilder = inject(FormBuilder);
 
   protected avis$!: Observable<Avis[]>;
+  protected livres$!: Observable<Livre[]>;
   private refresh$: Subject<void> = new Subject<void>();
 
   protected formAvis!: FormGroup;
@@ -42,6 +46,7 @@ export class AvisPage implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Avis');
+    this.livres$ = this.livreService.findAll();
     this.avis$ = this.refresh$.pipe(
       startWith(0),
       switchMap(() => this.avisService.findAll()),
@@ -97,7 +102,7 @@ export class AvisPage implements OnInit {
       note: avis.note,
       commentaire: avis.commentaire,
       date: avis.date,
-      livre: avis.livre,
+      livre: avis.livre.id,
     });
   }
 

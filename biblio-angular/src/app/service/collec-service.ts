@@ -13,7 +13,8 @@ export class CollecService {
     return this.http.get<Collec[]>("/collec");
   }
 
-  public update(id: number, collec: Collec): Observable<Collec> {
+  public update(id: number, nom: string): Observable<Collec> {
+    const collec: Collec = { id, nom };
     return this.http.put<Collec>(`/collec/${ id }`, collec);
   }
 
