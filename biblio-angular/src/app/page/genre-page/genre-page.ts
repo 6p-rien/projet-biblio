@@ -24,6 +24,8 @@ export class EditeurPage implements OnInit {
   protected formEditeur!: FormGroup;
   protected formLibelleCtrl!: FormControl;
 
+  protected updateId: number | null = null;
+
   ngOnInit(): void {
     this.titleService.setTitle("Liste des genres");
 
@@ -44,7 +46,7 @@ export class EditeurPage implements OnInit {
     this.refresh$.next();
   }
 
-  public addEditeur() {
+  public addGenre() {
     const genre: Genre = {
       id: 0,
       libelle: this.formLibelleCtrl.value,
@@ -53,7 +55,13 @@ export class EditeurPage implements OnInit {
     this.genreService.add(genre).subscribe(() => this.reload());
   }
 
-  public deletegenre(genre: Genre) {
+  public updateGenre(id: number, libelle: string) {
+    this.genreService.update(id, libelle).subscribe(() => {
+      this.updateId = id;
+      this.reload();
+    });
+  }
+  public deleteGenre(genre: Genre) {
     this.genreService.deleteById(genre.id).subscribe(() => this.reload());
   }
 }
