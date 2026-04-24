@@ -7,12 +7,12 @@ import { Genre } from '../../model/genre';
 import { GenreService } from '../../service/genre';
 
 @Component({
-  selector: 'app-editeur',
+  selector: 'app-genre',
   imports: [ CommonModule, ReactiveFormsModule ],
-  templateUrl: './editeur.html',
-  styleUrl: './editeur.css',
+  templateUrl: './genre.html',
+  styleUrl: './genre.css',
 })
-export class EditeurPage implements OnInit {
+export class GenrePage implements OnInit {
 
   private titleService = inject(Title);
   private genreService = inject(GenreService);
