@@ -4,8 +4,13 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -18,7 +23,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorization -> {
             authorization.requestMatchers("/api/auth", "/api/inscription").permitAll();
             authorization.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
-            authorization.requestMatchers("/**").permitAll();
+            authorization.requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
+                    .anyRequest().hasRole("ADMIN");
+            authorization.requestMatchers("/**").authenticated();
         });
 
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
@@ -40,6 +47,16 @@ public class SecurityConfig {
         corsSource.registerCorsConfiguration("/**", corsConfiguration);
 
         return corsSource;
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

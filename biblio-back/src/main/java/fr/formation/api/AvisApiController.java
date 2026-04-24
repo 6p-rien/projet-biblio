@@ -1,18 +1,11 @@
 package fr.formation.api;
 
-import fr.formation.dao.IDAOAvis;
-import fr.formation.dao.IDAOLivre;
-import fr.formation.dto.request.CreateOrUpdateAvisRequest;
-import fr.formation.dto.response.AvisResponse;
-import fr.formation.dto.response.EntityCreatedOrUpdatedResponse;
-import fr.formation.exception.AvisNotFoundException;
-import fr.formation.exception.LivreNotFoundException;
-import fr.formation.model.Avis;
-import jakarta.validation.Valid;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.formation.dao.IDAOAvis;
+import fr.formation.dao.IDAOLivre;
+import fr.formation.dto.request.CreateOrUpdateAvisRequest;
+import fr.formation.dto.response.AvisResponse;
+import fr.formation.dto.response.EntityCreatedOrUpdatedResponse;
+import fr.formation.exception.AvisNotFoundException;
+import fr.formation.exception.LivreNotFoundException;
+import fr.formation.model.Avis;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/avis")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class AvisApiController {
   private static final Logger log = LoggerFactory.getLogger(AvisApiController.class);
   private final IDAOAvis daoAvis;

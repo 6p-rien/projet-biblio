@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import fr.formation.dao.IDAOEditeur;
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/editeur")
+@PreAuthorize("hasRole('ADMIN')")
 public class EditeurApiController {
 
     private static final Logger log = LoggerFactory.getLogger(EditeurApiController.class);
