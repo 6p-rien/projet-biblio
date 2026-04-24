@@ -1,0 +1,104 @@
+<h1>Livres</h1>
+
+<form (submit)="addLivre()" [formGroup]="formLivre">
+  <div class="mb-3 row">
+    <label for="titre" class="col-sm-2 col-form-label">Titre</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="titre" formControlName="titre" [class.is-invalid]="formTitreCtrl.invalid" />
+      <div *ngIf="formTitreCtrl.hasError('required')" class="invalid-feedback">Le titre est obligatoire</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="resume" class="col-sm-2 col-form-label">Résumé</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="resume" formControlName="resume" />
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="annee" class="col-sm-2 col-form-label">Année</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="annee" formControlName="annee" [class.is-invalid]="formAnneeCtrl.invalid" />
+      <div *ngIf="formAnneeCtrl.hasError('required')" class="invalid-feedback">L'année est obligatoire</div>
+      <div *ngIf="formAnneeCtrl.hasError('min')" class="invalid-feedback">L'année doit être positive</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="auteurId" class="col-sm-2 col-form-label">ID Auteur</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="auteurId" formControlName="auteurId" [class.is-invalid]="formAuteurIdCtrl.invalid" />
+      <div *ngIf="formAuteurIdCtrl.hasError('required') || formAuteurIdCtrl.hasError('min')" class="invalid-feedback">L'auteur est obligatoire</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="editeurId" class="col-sm-2 col-form-label">ID Éditeur</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="editeurId" formControlName="editeurId" [class.is-invalid]="formEditeurIdCtrl.invalid" />
+      <div *ngIf="formEditeurIdCtrl.hasError('required') || formEditeurIdCtrl.hasError('min')" class="invalid-feedback">L'éditeur est obligatoire</div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="collecId" class="col-sm-2 col-form-label">ID Collection</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="collecId" formControlName="collecId" placeholder="(optionnel)" />
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="genresIds" class="col-sm-2 col-form-label">IDs Genres</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="genresIds" formControlName="genresIds" placeholder="ex: 1,2,3" />
+    </div>
+  </div>
+
+  <div>
+    <input [disabled]="formLivre.invalid" type="submit" class="btn btn-success" value="Ajouter" />
+  </div>
+</form>
+
+<hr />
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Résumé</th>
+      <th>Année</th>
+      <th>Auteur</th>
+      <th>Éditeur</th>
+      <th>Collection</th>
+      <th>Genres</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let livre of livres$ | async">
+      <td>{{ livre.id }}</td>
+      <td>{{ livre.titre }}</td>
+      <td>{{ livre.resume }}</td>
+      <td>{{ livre.annee }}</td>
+      <td>{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</td>
+      <td>{{ livre.editeur.nom }}</td>
+      <td>{{ livre.collection?.nom }}</td>
+      @for (genre of livre.genres; track genre.id) {
+                <td>{{ genre.libelle  }}</td>
+      }
+      @if (livre.genres.length == 0) { <td>{{ ""  }}</td>}
+
+      <td>
+        <button class="btn btn-warning" (click)="updateLivre(livre)">Modifier</button>
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="deleteLivre(livre)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
