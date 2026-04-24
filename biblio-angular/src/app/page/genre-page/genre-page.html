@@ -1,0 +1,43 @@
+<h1>Liste des genres</h1>
+
+<form (submit)="addGenre()" [formGroup]="formGenre">
+    <div class="mb-3 row">
+        <label for="libelle" class="col-sm-2 col-form-label">Libelle</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="libelle" formControlName="libelle" [class.is-invalid]="formlibelleCtrl.invalid" />
+            <div *ngIf="formlibelleCtrl.hasError('required')" class="invalid-feedback">Le libelle est obligatoire</div>
+        </div>
+    </div>
+
+    <div>
+        <input [disabled]="formGenre.invalid" type="submit" class="btn btn-success" value="Ajouter" />
+    </div>
+</form> 
+
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Libelle</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let genre of genre$ | async" >
+            <td>{{ genre.id }}</td>
+            <td>
+                <input type="text" class="form-control" #nomInput [value]="genre.libelle"/>
+                <div *ngIf="updateId === genre.id" class="valid-feedback d-block">Modification effectuée !</div>
+            </td>
+            <td>
+                <button class="btn btn-warning" (click)="updateGenre(genre.id, nomInput.value)">Modifier</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)="deleteGenre(genre)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
