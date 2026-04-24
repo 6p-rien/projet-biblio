@@ -12,24 +12,27 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import fr.formation.security.jwt.JwtHeaderFilter;
+
 @Configuration
 public class SecurityConfig {
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http,JwtHeaderFilter jwtHeaderFilter ) throws Exception {
         http.authorizeHttpRequests(authorization -> {
             authorization.requestMatchers("/api/auth", "/api/inscription").permitAll();
             authorization.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
-            authorization.requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
-                    .anyRequest().hasRole("ADMIN");
-            authorization.requestMatchers("/**").authenticated();
+            authorization.requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN");
+            authorization.requestMatchers(HttpMethod.POST, "/api/avis").hasRole("USER");
+            authorization.requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN");
         });
 
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
-
+        http.addFilterBefore(jwtHeaderFilter, UsernamePasswordAuthenticationFilter.class);
         http.cors(Customizer.withDefaults());
 
         return http.build();
@@ -42,7 +45,7 @@ public class SecurityConfig {
 
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowedMethods(List.of("*"));
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4201"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost"));
 
         corsSource.registerCorsConfiguration("/**", corsConfiguration);
 
