@@ -13,5 +13,5 @@ export interface AvisCreateUpdate {
   note: number;
   commentaire: string;
   date: Date;
-  livre: number;
+  idLivre: number;
 }

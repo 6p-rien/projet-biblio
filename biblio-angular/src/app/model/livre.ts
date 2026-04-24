@@ -1,1 +1,3 @@
-export interface Livre {}
+export interface Livre {
+  titre: string;
+}

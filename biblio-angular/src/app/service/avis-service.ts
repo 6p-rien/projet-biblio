@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Avis, AvisCreateUpdate } from './model/avis';
+import { Avis, AvisCreateUpdate } from '../model/avis';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,6 @@ export class AvisService {
     return this.http.put<AvisCreateUpdate>(`/avis/${avis.id}`, avis);
   }
   public deleteById(id: number): Observable<void> {
-    return this.http.delete<void>(`/matiere/${id}`);
+    return this.http.delete<void>(`/avis/${id}`);
   }
 }
