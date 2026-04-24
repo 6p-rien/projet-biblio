@@ -10,19 +10,19 @@ export class GenreService {
   constructor(private http: HttpClient) { }
 
   public findAll(): Observable<Genre[]> {
-    return this.http.get<Genre[]>("/collec");
+    return this.http.get<Genre[]>("/genre");
   }
 
   public update(id: number, libelle: string): Observable<Genre> {
     const genre: Genre = { id, libelle };
-    return this.http.put<Genre>(`/collec/${ id }`, genre);
+    return this.http.put<Genre>(`/genre/${id}`, genre);
   }
 
   public add(genre: Genre): Observable<Genre> {
-    return this.http.post<Genre>("/collec", genre);
+    return this.http.post<Genre>('/genre', genre);
   }
 
   public deleteById(id: number): Observable<void> {
-    return this.http.delete<void>(`/collec/${ id }`);
+    return this.http.delete<void>(`/genre/${id}`);
   }
 }
