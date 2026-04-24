@@ -26,32 +26,43 @@
   </div>
 
   <div class="mb-3 row">
-    <label for="auteurId" class="col-sm-2 col-form-label">ID Auteur</label>
+    <label for="auteurId" class="col-sm-2 col-form-label">Auteur</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="auteurId" formControlName="auteurId" [class.is-invalid]="formAuteurIdCtrl.invalid" />
+      <select class="form-select" id="auteurId" formControlName="auteurId" [class.is-invalid]="formAuteurIdCtrl.invalid">
+        <option [ngValue]="0">-- Sélectionner un auteur --</option>
+        <option *ngFor="let auteur of auteurs$ | async" [ngValue]="auteur.id">{{ auteur.prenom }} {{ auteur.nom }}</option>
+      </select>
       <div *ngIf="formAuteurIdCtrl.hasError('required') || formAuteurIdCtrl.hasError('min')" class="invalid-feedback">L'auteur est obligatoire</div>
     </div>
   </div>
 
   <div class="mb-3 row">
-    <label for="editeurId" class="col-sm-2 col-form-label">ID Éditeur</label>
+    <label for="editeurId" class="col-sm-2 col-form-label">Éditeur</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="editeurId" formControlName="editeurId" [class.is-invalid]="formEditeurIdCtrl.invalid" />
+      <select class="form-select" id="editeurId" formControlName="editeurId" [class.is-invalid]="formEditeurIdCtrl.invalid">
+        <option [ngValue]="0">-- Sélectionner un éditeur --</option>
+        <option *ngFor="let editeur of editeurs$ | async" [ngValue]="editeur.id">{{ editeur.nom }}</option>
+      </select>
       <div *ngIf="formEditeurIdCtrl.hasError('required') || formEditeurIdCtrl.hasError('min')" class="invalid-feedback">L'éditeur est obligatoire</div>
     </div>
   </div>
 
   <div class="mb-3 row">
-    <label for="collecId" class="col-sm-2 col-form-label">ID Collection</label>
+    <label for="collecId" class="col-sm-2 col-form-label">Collection</label>
     <div class="col-sm-4">
-      <input type="number" class="form-control" id="collecId" formControlName="collecId" placeholder="(optionnel)" />
+      <select class="form-select" id="collecId" formControlName="collecId">
+        <option [ngValue]="null">-- Aucune collection --</option>
+        <option *ngFor="let collec of collecs$ | async" [ngValue]="collec.id">{{ collec.nom }}</option>
+      </select>
     </div>
   </div>
 
   <div class="mb-3 row">
-    <label for="genresIds" class="col-sm-2 col-form-label">IDs Genres</label>
+    <label for="genresIds" class="col-sm-2 col-form-label">Genres</label>
     <div class="col-sm-4">
-      <input type="text" class="form-control" id="genresIds" formControlName="genresIds" placeholder="ex: 1,2,3" />
+      <select class="form-select" id="genresIds" formControlName="genresIds" multiple size="5">
+        <option *ngFor="let genre of genres$ | async" [ngValue]="genre.id">{{ genre.libelle }}</option>
+      </select>
     </div>
   </div>
 
@@ -81,19 +92,43 @@
   <tbody>
     <tr *ngFor="let livre of livres$ | async">
       <td>{{ livre.id }}</td>
-      <td>{{ livre.titre }}</td>
-      <td>{{ livre.resume }}</td>
-      <td>{{ livre.annee }}</td>
-      <td>{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</td>
-      <td>{{ livre.editeur.nom }}</td>
-      <td>{{ livre.collection?.nom }}</td>
-      @for (genre of livre.genres; track genre.id) {
-                <td>{{ genre.libelle  }}</td>
-      }
-      @if (livre.genres.length == 0) { <td>{{ ""  }}</td>}
-
       <td>
-        <button class="btn btn-warning" (click)="updateLivre(livre)">Modifier</button>
+        <input type="text" class="form-control" [value]="livre.titre" #titreInput />
+      </td>
+      <td>
+        <input type="text" class="form-control" [value]="livre.resume" #resumeInput />
+      </td>
+      <td>
+        <input type="number" min="0" class="form-control" [value]="livre.annee" #anneeInput />
+      </td>
+      <td>
+        <select class="form-select" [value]="livre.auteur.id" #auteurSelect>
+          <option *ngFor="let auteur of auteurs$ | async" [value]="auteur.id">{{ auteur.prenom }} {{ auteur.nom }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-select" [value]="livre.editeur.id" #editeurSelect>
+          <option *ngFor="let editeur of editeurs$ | async" [value]="editeur.id">{{ editeur.nom }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-select" [value]="livre.collection?.id ?? ''" #collectionSelect>
+          <option value="">-- Aucune collection --</option>
+          <option *ngFor="let collec of collecs$ | async" [value]="collec.id">{{ collec.nom }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-select" multiple size="4" [(ngModel)]="editGenresIds[livre.id!]" [ngModelOptions]="{standalone: true}">
+          <option *ngFor="let genre of genres$ | async" [ngValue]="genre.id">{{ genre.libelle }}</option>
+        </select>
+      </td>
+      <td>
+        <button
+          class="btn btn-warning"
+          (click)="updateLivre(livre, titreInput.value, resumeInput.value, anneeInput.value, auteurSelect.value, editeurSelect.value, collectionSelect.value, editGenresIds[livre.id!])"
+        >
+          Modifier
+        </button>
       </td>
       <td>
         <button class="btn btn-danger" (click)="deleteLivre(livre)">Supprimer</button>
