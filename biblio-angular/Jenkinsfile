@@ -32,7 +32,7 @@ pipeline {
 
         stage('Docker build') {
             steps {
-                    sh 'docker build -t ajc/biblio-front .'
+                sh 'docker build -t ajc/biblio-front -f biblio-angular/Dockerfile'
             }
         }
     }
