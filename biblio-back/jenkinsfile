@@ -29,7 +29,7 @@ pipeline {
             steps {
                 dir('biblio-back') {
                     withSonarQubeEnv('sonar-id') {
-                        sh "mvn verify sonar:sonar -Dsonar.projectKey=quest-boot -Dsonar.projectName='biblio-back'"
+                        sh "mvn verify sonar:sonar -Dsonar.projectKey=biblioback -Dsonar.projectName='biblio-back' -Dspring_datasource_url='jdbc:mysql://mysql:3306/projet_biblio?createDatabaseIfNotExist=true'"
                     }
                 }
             }
