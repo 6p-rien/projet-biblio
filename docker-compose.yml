@@ -21,7 +21,7 @@ services:
       - mysql_data:/var/lib/mysql
 
     networks:
-      - biblio-network
+      - devops
 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -30,10 +30,7 @@ services:
       interval: 5s
 
   java:
-    build:
-      context: .
-      dockerfile: biblio-back/Dockerfile
-      network: host
+    image: biblioback
     container_name: biblio-back
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/projet_biblio?createDatabaseIfNotExist=true
@@ -41,7 +38,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
 
     networks:
-      - biblio-network
+      - devops
 
     ports:
       - 8080:8080
@@ -51,20 +48,18 @@ services:
         condition: service_healthy
 
   web:
-    build:
-      context: .
-      dockerfile: biblio-angular/Dockerfile
+    image: biblioAngular
     container_name: angular
     ports:
       - 4201:4201
     networks:
-      - biblio-network
+      - devops
     depends_on:
       - java
 
 networks:
-  biblio-network:
-    name: demo-nom-rso
+  devops:
+    name: devops
 
 volumes:
   mysql_data:
