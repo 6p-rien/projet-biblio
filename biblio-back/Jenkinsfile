@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Maven build and SonarQube analysis') {
+            agent {
+                docker {
+                    image 'maven:3.9-eclipse-temurin-21'
+                    args '--network devops -v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                dir('biblio-back') {
+                    withSonarQubeEnv('sonar') {
+                        sh "mvn verify sonar:sonar -Dsonar.projectKey=biblio-back -Dsonar.projectName='biblio-back'"
+                    }
+                }
+            }
+        }
+
+        stage('SonarQube Quality Gate') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Docker build') {
+            steps {
+                dir('biblio-back') {
+                    sh 'docker build -t ajc/biblio-back .'
+                }
+            }
+        }
+    }
+}

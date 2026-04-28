@@ -23,11 +23,16 @@ pipeline {
                         sh '''
                             npm install
                             npm run build
-                            npx sonar-scanner
                         '''
                     }
                 }
             }
+                stage('Sonar analysis') {
+                    steps {
+                        dir('biblio-angular') {
+                            sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=biblio-angular'
+                        }
+                    }
         }
 
         stage('Docker build') {
