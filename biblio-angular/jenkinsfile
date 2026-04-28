@@ -58,7 +58,7 @@ pipeline {
         stage('Docker build') {
             steps {
                 dir('biblio-angular') {
-                    sh 'docker build -t biblioAngular -f \"$WORKSPACE/biblio-angular/Dockerfile\" \"$WORKSPACE\"'
+                    sh 'docker build -t biblioangular -f \"$WORKSPACE/biblio-angular/Dockerfile\" \"$WORKSPACE\"'
                 }
             }
         }
