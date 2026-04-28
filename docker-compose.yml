@@ -48,7 +48,7 @@ services:
         condition: service_healthy
 
   web:
-    image: biblioAngular
+    image: biblioangular
     container_name: angular
     ports:
       - 4201:4201
