@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     git credentialsId: 'github-login',
-                        url: 'git@github.com/6p-rien/projet-biblio.git',
+                        url: 'git@github.com:6p-rien/projet-biblio.git',
                         branch: 'adam'
                 }
             }
