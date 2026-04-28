@@ -37,7 +37,7 @@ pipeline {
 
         stage('Docker build') {
             steps {
-                dir() {
+                dir('/') {
                     sh 'docker build -t biblioback biblio-back/.'
                 }
             }
